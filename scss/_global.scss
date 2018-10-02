@@ -5,7 +5,8 @@ html {
 }
 
 body {
-  @include body-font;
+	@include body-font;
+	direction: rtl;
 }
 
 // Custom Button Size

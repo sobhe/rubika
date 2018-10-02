@@ -11,55 +11,27 @@
     <title>Stylish Portfolio - Start Bootstrap Template</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="vendor/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/stylish-portfolio.min.css" rel="stylesheet">
+    <link href="dist/main.css" rel="stylesheet">
 
   </head>
 
   <body id="page-top">
 
-    <!-- Navigation -->
-    <a class="menu-toggle rounded" href="#">
-      <i class="fas fa-bars"></i>
-    </a>
-    <nav id="sidebar-wrapper">
-      <ul class="sidebar-nav">
-        <li class="sidebar-brand">
-          <a class="js-scroll-trigger" href="#page-top">Start Bootstrap</a>
-        </li>
-        <li class="sidebar-nav-item">
-          <a class="js-scroll-trigger" href="#page-top">Home</a>
-        </li>
-        <li class="sidebar-nav-item">
-          <a class="js-scroll-trigger" href="#about">About</a>
-        </li>
-        <li class="sidebar-nav-item">
-          <a class="js-scroll-trigger" href="#services">Services</a>
-        </li>
-        <li class="sidebar-nav-item">
-          <a class="js-scroll-trigger" href="#portfolio">Portfolio</a>
-        </li>
-        <li class="sidebar-nav-item">
-          <a class="js-scroll-trigger" href="#contact">Contact</a>
-        </li>
-      </ul>
-    </nav>
-
     <!-- Header -->
     <header class="masthead d-flex">
       <div class="container text-center my-auto">
-        <h1 class="mb-1">Stylish Portfolio</h1>
+        <h1 class="mb-1">داده‌ها صحبت می‌کنند</h1>
         <h3 class="mb-5">
-          <em>A Free Bootstrap Theme by Start Bootstrap</em>
+          <em>نمایش قابلیت ترکیب دو سیستم قدرتمند جادوبی و کشف</em>
         </h3>
-        <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
+        <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">شروع کنید</a>
       </div>
       <div class="overlay"></div>
     </header>
@@ -69,64 +41,24 @@
       <div class="container text-center">
         <div class="row">
           <div class="col-lg-10 mx-auto">
-            <h2>Stylish Portfolio is the perfect theme for your next project!</h2>
-            <p class="lead mb-5">This theme features a flexible, UX friendly sidebar menu and stock photos from our friends at
-              <a href="https://unsplash.com/">Unsplash</a>!</p>
-            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#services">What We Offer</a>
+            <h2>نتیجه‌ی همکاری پلتفرم کشف و هوش تجاری جادوبی</h2>
+            <p class="lead mb-5">داده‌های جمع‌آوری شده از سطح وب توسط پلتفرم هوش مصنوعی کشف دسته‌بندی می‌شوند و به وسیله‌ی نمودارهای جادوبی به نمایش گذاشته می‌شوند!</p>
+            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#mainChartSection">نمونه ببینید</a>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Services -->
-    <section class="content-section bg-primary text-white text-center" id="services">
-      <div class="container">
-        <div class="content-section-heading">
-          <h3 class="text-secondary mb-0">Services</h3>
-          <h2 class="mb-5">What We Offer</h2>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-            <span class="service-icon rounded-circle mx-auto mb-3">
-              <i class="icon-screen-smartphone"></i>
-            </span>
-            <h4>
-              <strong>Responsive</strong>
-            </h4>
-            <p class="text-faded mb-0">Looks great on any screen size!</p>
-          </div>
-          <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-            <span class="service-icon rounded-circle mx-auto mb-3">
-              <i class="icon-pencil"></i>
-            </span>
-            <h4>
-              <strong>Redesigned</strong>
-            </h4>
-            <p class="text-faded mb-0">Freshly redesigned for Bootstrap 4.</p>
-          </div>
-          <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
-            <span class="service-icon rounded-circle mx-auto mb-3">
-              <i class="icon-like"></i>
-            </span>
-            <h4>
-              <strong>Favorited</strong>
-            </h4>
-            <p class="text-faded mb-0">Millions of users
-              <i class="fas fa-heart"></i>
-              Start Bootstrap!</p>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <span class="service-icon rounded-circle mx-auto mb-3">
-              <i class="icon-mustache"></i>
-            </span>
-            <h4>
-              <strong>Question</strong>
-            </h4>
-            <p class="text-faded mb-0">I mustache you a question...</p>
-          </div>
-        </div>
-      </div>
-    </section>
+		</section>
+		
+		<!-- Main Chart -->
+		<section class="content-section" id="mainChartSection">
+			<div class="container">
+        <div class="content-section-heading text-center">
+          <h3 class="text-secondary mb-0">نظرات یک ماه گذشته</h3>
+          <h2 class="mb-5">بر اساس تاریخ</h2>
+				</div>
+				<canvas id="mainChart" class="canvas-full"></canvas>
+			</div>
+		</section>
 
     <!-- Callout -->
     <section class="callout">
@@ -136,10 +68,28 @@
           next website!</h2>
         <a class="btn btn-primary btn-xl" href="https://startbootstrap.com/template-overviews/stylish-portfolio/">Download Now!</a>
       </div>
-    </section>
+		</section>
+		
+		<!-- Pie Charts -->
+		<section class="content-section" id="piechartSection">
+				<div class="container">
+					<div class="content-section-heading text-center">
+						<h3 class="text-secondary mb-0"></h3>
+						<h2 class="mb-5">یک نمونه‌ی دیگر</h2>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<canvas id="piechartPositive" class="canvas-full"></canvas>
+						</div>
+						<div class="col-lg-6">
+							<canvas id="piechartNegative" class="canvas-full"></canvas>
+						</div>
+					</div>
+				</div>
+			</section>
 
     <!-- Portfolio -->
-    <section class="content-section" id="portfolio">
+    <!-- <section class="content-section" id="portfolio">
       <div class="container">
         <div class="content-section-heading text-center">
           <h3 class="text-secondary mb-0">Portfolio</h3>
@@ -192,41 +142,41 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Call to Action -->
-    <section class="content-section bg-primary text-white">
+    <!-- <section class="content-section bg-primary text-white">
       <div class="container text-center">
         <h2 class="mb-4">The buttons below are impossible to resist...</h2>
         <a href="#" class="btn btn-xl btn-light mr-4">Click Me!</a>
         <a href="#" class="btn btn-xl btn-dark">Look at Me!</a>
       </div>
-    </section>
+    </section> -->
 
     <!-- Map -->
-    <section id="contact" class="map">
+    <!-- <section id="contact" class="map">
       <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
       <br/>
       <small>
         <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a>
       </small>
-    </section>
+    </section> -->
 
     <!-- Footer -->
     <footer class="footer text-center">
       <div class="container">
-        <ul class="list-inline mb-5">
-          <li class="list-inline-item">
-            <a class="social-link rounded-circle text-white mr-3" href="#">
+        <ul class="list-inline mb-5 pr-0">
+          <li class="list-inline-item mr-0">
+            <a class="social-link rounded-circle text-white ml-3" href="#">
               <i class="icon-social-facebook"></i>
             </a>
           </li>
-          <li class="list-inline-item">
-            <a class="social-link rounded-circle text-white mr-3" href="#">
+          <li class="list-inline-item mr-0">
+            <a class="social-link rounded-circle text-white ml-3" href="#">
               <i class="icon-social-twitter"></i>
             </a>
           </li>
-          <li class="list-inline-item">
+          <li class="list-inline-item mr-0">
             <a class="social-link rounded-circle text-white" href="#">
               <i class="icon-social-github"></i>
             </a>
@@ -243,13 +193,15 @@
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/bootstrap/bootstrap.bundle.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/jquery/jquery.easing.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="js/stylish-portfolio.min.js"></script>
+		<script src="dist/main.js"></script>
 
   </body>
 
