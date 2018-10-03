@@ -15,9 +15,18 @@ body {
 }
 
 // Content Section
-.content-section {
+[class^=content-section--] {
   padding-top: 7.5rem;
-  padding-bottom: 7.5rem;
+	padding-bottom: 7.5rem;
+}
+
+.content-section {
+	padding-top: 7.5rem;
+	padding-bottom: 7.5rem;
+	
+	&--full-height {
+		min-height: 100vh;
+	}
 }
 
 .content-section-heading {

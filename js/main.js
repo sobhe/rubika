@@ -4,5 +4,5 @@
 })(jQuery);
 
 require('./barchart');
-require('./piechart');
+// require('./piechart');
 require('./app');
