@@ -68,32 +68,64 @@ $('.map').on('click', onMapClickHandler);
 var _ = require('lodash');
 var pdate = require('persian-date');
 
+function calculateMinMax(datasets) {
+
+	_.mixin({
+		zipUp: function(arrays){
+			return _.zip.apply(_, arrays);
+		}
+	});
+
+	var values = _(datasets)
+		.map(function(set){ return set.data })
+		.zipUp()
+		.map(function(row){
+			return {
+				min: _.reduce(row, function(sum, n){ return (_.lt(n, 0)) ? sum + n : sum }, 0),
+				max: _.reduce(row, function(sum, n){ return (_.gt(n, 0)) ? sum + n : sum }, 0),
+			}
+		})
+		.value();
+
+	return {
+		min: _.floor(_.get(_.minBy(values, 'min'), 'min'), -2),
+		max: _.ceil(_.get(_.maxBy(values, 'max'), 'max'), -2),
+	}
+}
+
 module.exports = function (rawdata) {
 
-	var labels = _.uniq(_.map(_.sortBy(rawdata, 'date'), function(row){
-		return new pdate(row.date).format(pdateFormat)
-	}));
+	var labels = _(rawdata)
+		.sortBy('date')
+		.map(function(row){ return new pdate(row.date).format(pdateFormat) })
+		.uniq()
+		.value();
 
-	var datasets = _.uniqWith(_.map(rawdata, function(o){ return {label: o.tag, sense: o.sense} }), _.isEqual);
-	datasets = _.map(datasets, function(o){ return _.assign(o, {data: []})});
-
-	var positiveIndex = 0;
-	var negativeIndex = 0;
-	_.each(datasets, function(set, index){
-		datasets[index].backgroundColor = (set.sense == 'منفی') ? window.chartColors.negative[negativeIndex++] : window.chartColors.positive[positiveIndex++];
-	});
-
-	_.each(rawdata, function(row){
-		var index = _.findIndex(datasets, function(o){ return o.label == row.tag});
-		_.each(labels, function(label, labelIndex){
-			var value = (row.date_label == label) ? row.value : 0;
-			if(datasets[index].data[labelIndex]) {
-				datasets[index].data[labelIndex] += value;
-			} else {
-				datasets[index].data[labelIndex] = value;
-			}
-		});
-	});
+	var datasets = _(rawdata)
+		.groupBy('sense')
+		.mapValues(function(senseGroup, senseName){
+			return _(senseGroup)
+				.groupBy('tag')
+				// .sortBy()
+				.mapValues(function(tagGroup, tagName){ 
+					return {
+						data: _.map(labels, function(label){
+							var foundRow = _.find(tagGroup, function(row){ return row.date_label == label });
+							return (foundRow) ? foundRow.value : 0;
+						}),
+						label: tagName
+					}
+				})
+				.sortBy('label')
+				.values()
+				.map(function(set, index){
+					return _.assign(set, { backgroundColor: window.chartColors[(senseName == 'مثبت') ? 'positive' : 'negative'][index] })
+				})
+				.value();
+		})
+		.values()
+		.flatten()
+		.value();
 
 	var ctx = document.getElementById("mainChart").getContext('2d');
 	var options = {
@@ -101,16 +133,16 @@ module.exports = function (rawdata) {
 		tooltips: {
 			mode: 'index'
 		},
+		legend: {
+			position: 'bottom'
+		},
 		scales: {
 			xAxes: [{
 				stacked: true
 			}],
 			yAxes: [{
 				stacked: true,
-				ticks: {
-					fontFamily: 'Shabnam'
-				// 	beginAtZero: true
-				}
+				ticks: calculateMinMax(datasets)
 			}]
 		}
 	};
@@ -157,14 +189,13 @@ function aggregate(rawdata, key) {
 	if(_.isArray(rawdata)) {
 		return _.chain(rawdata)
 		.filter(function(row) { return row.sense == key })
+		.sortBy('tag')
 		.groupBy('tag')
-		.sortBy()
 		.map(function(obj){ return _.sumBy(obj, function(row){ return Math.abs(row.value) }) })
 		.value()
 	} else {
 		return [];
 	}
-
 }
 
 function render(rawdata) {
@@ -172,13 +203,14 @@ function render(rawdata) {
 	var labels = _(rawdata)
 		.map(function(o) { return { sense: o.sense, label: o.tag }; })
 		.uniqWith(_.isEqual)
-		.sortBy()
+		.sortBy('label')
 		.groupBy('sense')
 		.mapValues(function(o) { return _.map(o, 'label'); })
 		.value();
 
-	var positiveData = aggregate(rawdata, 'مثبت')
-	var negativeData = aggregate(rawdata, 'منفی')
+	var positiveData = aggregate(rawdata, 'مثبت');
+	var negativeData = aggregate(rawdata, 'منفی');
+
 
 	var options = {
 		responsive: true,

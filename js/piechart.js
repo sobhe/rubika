@@ -4,14 +4,13 @@ function aggregate(rawdata, key) {
 	if(_.isArray(rawdata)) {
 		return _.chain(rawdata)
 		.filter(function(row) { return row.sense == key })
+		.sortBy('tag')
 		.groupBy('tag')
-		.sortBy()
 		.map(function(obj){ return _.sumBy(obj, function(row){ return Math.abs(row.value) }) })
 		.value()
 	} else {
 		return [];
 	}
-
 }
 
 function render(rawdata) {
@@ -19,13 +18,14 @@ function render(rawdata) {
 	var labels = _(rawdata)
 		.map(function(o) { return { sense: o.sense, label: o.tag }; })
 		.uniqWith(_.isEqual)
-		.sortBy()
+		.sortBy('label')
 		.groupBy('sense')
 		.mapValues(function(o) { return _.map(o, 'label'); })
 		.value();
 
-	var positiveData = aggregate(rawdata, 'مثبت')
-	var negativeData = aggregate(rawdata, 'منفی')
+	var positiveData = aggregate(rawdata, 'مثبت');
+	var negativeData = aggregate(rawdata, 'منفی');
+
 
 	var options = {
 		responsive: true,
