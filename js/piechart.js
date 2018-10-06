@@ -1,92 +1,91 @@
 var _ = require('lodash');
-// var pdate = require('persian-date');
-// var queryResult = require('./data.json');
 
-(function ($) {
-	"use strict"; // Start of use strict
+function aggregate(rawdata, key) {
+	if(_.isArray(rawdata)) {
+		return _.chain(rawdata)
+		.filter(function(row) { return row.sense == key })
+		.groupBy('tag')
+		.sortBy()
+		.map(function(obj){ return _.sumBy(obj, function(row){ return Math.abs(row.value) }) })
+		.value()
+	} else {
+		return [];
+	}
 
-	var queryUrl = 'https://app.jadoobi.com/sobhe/api/queries/12148/results.json?api_key=GLWHkzs5Tj18m79Hn1JpHRbaCI8vDOkUMsfqq8aX';
-	var rows = null;
+}
 
-	// $.get(queryUrl, function(queryResult){
-	// 	rows = queryResult.query_result.data.rows;
-	// });
+function render(rawdata) {
 
-	rows = _.partition(rows, 'احساس');
-	console.log(rows);
-	return;
+	var labels = _(rawdata)
+		.map(function(o) { return { sense: o.sense, label: o.tag }; })
+		.uniqWith(_.isEqual)
+		.sortBy()
+		.groupBy('sense')
+		.mapValues(function(o) { return _.map(o, 'label'); })
+		.value();
 
-	rows = _.map(rows, function(row) {
-		return {
-			date: new Date(row['تاریخ']),
-			date_label: new pdate(new Date(row['تاریخ'])).format(pdateFormat),
-			tag: row['عنوان'],
-			value: row['تعداد کل']
-		}
-	});
-
-	var labels = _.uniq(_.map(_.sortBy(rows, 'date'), function(row){
-		return new pdate(row.date).format(pdateFormat)
-	}));
-
-	window.chartColors = {
-		red: 'rgb(255, 99, 132)',
-		orange: 'rgb(255, 159, 64)',
-		yellow: 'rgb(255, 205, 86)',
-		green: 'rgb(75, 192, 192)',
-		blue: 'rgb(54, 162, 235)',
-		purple: 'rgb(153, 102, 255)',
-		grey: 'rgb(201, 203, 207)'
-	};
-
-	window.chartColors = _.map(window.chartColors, function(o){ return o });
-
-	var datasets = _.map(_.uniq(_.map(rows, function(o){ return o.tag })), function(label, index){
-		return {
-			label: label,
-			data: [],
-			backgroundColor: window.chartColors[index]
-		}
-	});
-
-	_.each(rows, function(row){
-		var index = _.findIndex(datasets, function(o){ return o.label == row.tag});
-		_.each(labels, function(label, labelIndex){
-			var value = (row.date_label == label) ? row.value : 0;
-			if(datasets[index].data[labelIndex]) {
-				datasets[index].data[labelIndex] += value;
-			} else {
-				datasets[index].data[labelIndex] = value;
-			}
-		});
-	});
-
-	var ctxPositive = document.getElementById("piechartPositive").getContext('2d');
-	var ctxNegative = document.getElementById("piechartNegative").getContext('2d');
+	var positiveData = aggregate(rawdata, 'مثبت')
+	var negativeData = aggregate(rawdata, 'منفی')
 
 	var options = {
 		responsive: true,
-		scales: {
-			xAxes: [{
-				stacked: true
-			}],
-			yAxes: [{
-				stacked: true,
-				// ticks: {
-				// 	beginAtZero: true
-				// }
-			}]
+		legend: {
+			position: 'bottom',
+		},
+		animation: {
+			animateScale: true,
+			animateRotate: true
 		}
 	};
-	var data = {
-		labels: labels,
-		datasets: datasets
-	};
 
-	var mainChart = new Chart(ctx, {
-		type: 'bar',
-		data: data,
-		options: options
+	positivePie({
+		type: 'doughnut',
+		options: options,
+		data: {
+			datasets: [{
+				data: positiveData,
+				backgroundColor: window.chartColors.positive,
+				label: 'نظرات مثبت'
+			}],
+			labels: labels['مثبت'],
+		}
+	});
+	
+	negativePie({
+		type: 'doughnut',
+		options: options,
+		data: {
+			labels: labels['منفی'],
+			datasets: [{
+				data: negativeData,
+				backgroundColor: window.chartColors.negative,
+				label: 'نظرات منفی'
+			}]
+		}
 	});
 
-})(jQuery);
+}
+
+function positivePie(props) {
+
+	var ctx = document.getElementById("doughnutPositive").getContext('2d');
+
+	var myChart = new Chart(ctx, props);
+	myChart.update();
+
+	// return chart;
+
+}
+
+function negativePie(props) {
+
+	var ctx = document.getElementById("doughnutNegative").getContext('2d');
+
+	var myChart = new Chart(ctx, props);
+	myChart.update();
+
+	// return chart;
+
+}
+
+module.exports = render;
