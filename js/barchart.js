@@ -74,7 +74,7 @@ module.exports = function (rawdata) {
 			scaleID: 'x-axis-0',
 			value: value,
 			borderColor: 'rgba(244, 66, 66, 0.5)',
-			borderWidth: 2,
+			borderWidth: 4,
 			borderDash: [10,10],
 			borderDashOffset: 1,
 			label: {
@@ -89,7 +89,7 @@ module.exports = function (rawdata) {
 				cornerRadius: 6,
 				position: "bottom",
 				xAdjust: 0,
-				yAdjust: 0,
+				yAdjust: 5,
 				content: content
 			}
 		}
