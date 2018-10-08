@@ -16,13 +16,11 @@ body {
 
 // Content Section
 [class^=content-section--] {
-  padding-top: 7.5rem;
-	padding-bottom: 7.5rem;
+  @include content-section;
 }
 
 .content-section {
-	padding-top: 7.5rem;
-	padding-bottom: 7.5rem;
+	@include content-section;
 	
 	&--full-height {
 		min-height: 100vh;

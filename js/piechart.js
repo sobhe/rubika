@@ -71,7 +71,6 @@ function positivePie(props) {
 	var ctx = document.getElementById("doughnutPositive").getContext('2d');
 
 	var myChart = new Chart(ctx, props);
-	myChart.update();
 
 	// return chart;
 
@@ -82,7 +81,6 @@ function negativePie(props) {
 	var ctx = document.getElementById("doughnutNegative").getContext('2d');
 
 	var myChart = new Chart(ctx, props);
-	myChart.update();
 
 	// return chart;
 

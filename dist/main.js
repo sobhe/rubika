@@ -128,6 +128,40 @@ module.exports = function (rawdata) {
 		.value();
 
 	var ctx = document.getElementById("mainChart").getContext('2d');
+
+	var annotationPoints = {
+		'شروع جام جهانی': '۱۳۹۷/۰۳/۲۴',
+		'پایان جام جهانی': '۱۳۹۷/۰۴/۲۴',
+	}
+	var annotations = _.map(annotationPoints, function(value, content) {
+		return {
+			type: 'line',
+			// id: 'a-line-1',
+			mode: 'vertical',
+			scaleID: 'x-axis-0',
+			value: value,
+			borderColor: 'rgba(244, 66, 66, 0.5)',
+			borderWidth: 2,
+			borderDash: [10,10],
+			borderDashOffset: 1,
+			label: {
+				enabled: true,
+				backgroundColor: 'rgba(0,0,0,0.5)',
+				fontFamily: "Shabnam",
+				fontSize: 10,
+				fontStyle: "normal",
+				fontColor: "#fff",
+				xPadding: 6,
+				yPadding: 6,
+				cornerRadius: 6,
+				position: "bottom",
+				xAdjust: 0,
+				yAdjust: 0,
+				content: content
+			}
+		}
+	});
+
 	var options = {
 		responsive: true,
 		tooltips: {
@@ -144,6 +178,10 @@ module.exports = function (rawdata) {
 				stacked: true,
 				ticks: calculateMinMax(datasets)
 			}]
+		},
+		annotation: {
+			drawTime: 'beforeDatasetsDraw',
+			annotations: annotations
 		}
 	};
 
@@ -157,12 +195,15 @@ module.exports = function (rawdata) {
 		data: data,
 		options: options
 	});
+
+	window.mainChart = mainChart;
 }
 
 },{"lodash":6,"persian-date":7}],3:[function(require,module,exports){
 var utils = require('./utils');
 var renderBarchart = require('./barchart');
 var renderPiechart = require('./piechart');
+// var Chart = require('chartjs');
 
 (function ($) {
 	"use strict"; // Start of use strict
@@ -256,7 +297,6 @@ function positivePie(props) {
 	var ctx = document.getElementById("doughnutPositive").getContext('2d');
 
 	var myChart = new Chart(ctx, props);
-	myChart.update();
 
 	// return chart;
 
@@ -267,7 +307,6 @@ function negativePie(props) {
 	var ctx = document.getElementById("doughnutNegative").getContext('2d');
 
 	var myChart = new Chart(ctx, props);
-	myChart.update();
 
 	// return chart;
 

@@ -11,3 +11,8 @@
 @mixin body-font {
   font-family: 'Shabnam';
 }
+
+@mixin content-section {
+	padding-top: 7.5rem;
+	padding-bottom: 7.5rem;
+}

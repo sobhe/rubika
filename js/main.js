@@ -1,6 +1,7 @@
 var utils = require('./utils');
 var renderBarchart = require('./barchart');
 var renderPiechart = require('./piechart');
+// var Chart = require('chartjs');
 
 (function ($) {
 	"use strict"; // Start of use strict
