@@ -208,7 +208,7 @@ var renderPiechart = require('./piechart');
 (function ($) {
 	"use strict"; // Start of use strict
 
-	var queryUrl = '/js/days.json';
+	var queryUrl = 'js/days.json';
 	var data = null;
 
 	Chart.defaults.global.defaultFontFamily = "Shabnam";
